@@ -1,10 +1,28 @@
 import Post from "../models/Post.js";
 import { validationResult } from "express-validator";
 
+export const getLastTags = async (req, res) => {
+  try {
+    const posts = await Post.find().limit(5).exec();
+    // here we conntect link(using populate) with user document. to get user object with id
+    const tags = posts
+      .map((obj) => obj.tags)
+      .flat()
+      .slice(0, 5);
+    // he we took out the tags from post
+    res.json(tags);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Could not create post",
+    });
+  }
+};
+
 export const getAll = async (req, res) => {
   try {
     const posts = await Post.find({}).populate("user").exec();
-    // here we conntect link(using populate) with user document. to get user object with id
+
     res.json(posts);
   } catch (err) {
     console.log(err);
@@ -51,7 +69,10 @@ export const getOne = async (req, res) => {
           res.json(doc);
         }
       }
-    );
+    ).populate("user"); // here we conntect link(using populate) with user document. to get user object with id
+
+    //here we used populate from mongoose, becouse when we get the post, there was no info, who created post,after
+    // we used populate, old info has been changed by acctually info, which user exactly created this post
   } catch (err) {
     console.log(err);
     res.status(500).json({
@@ -102,7 +123,7 @@ export const create = async (req, res) => {
     const doc = new Post({
       title: req.body.title,
       text: req.body.text,
-      tags: req.body.tags,
+      tags: req.body.tags.split(","),
       imageUrl: req.body.imageUrl,
       user: req.userId,
     });
@@ -128,7 +149,7 @@ export const update = async (req, res) => {
         text: req.body.text,
         imageUrl: req.body.imageUrl,
         user: req.userId,
-        tags: req.body.tags,
+        tags: req.body.tags.split(","),
       }
     );
     res.json({

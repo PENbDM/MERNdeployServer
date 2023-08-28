@@ -23,6 +23,6 @@ export const postCreateValidation = [
       min: 10,
     })
     .isString(),
-  body("tags", "Wrong type of tags (enter the array)").optional().isArray(),
-  body("imageUrl", "Wrong url, try again").optional().isURL(),
+  body("tags", "Wrong type of tags (enter the array)").optional(),
+  body("imageUrl", "Wrong url, try again").optional(),
 ];
