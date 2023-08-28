@@ -22,7 +22,9 @@ import {
 import * as PostController from "./controllers/PostController.js";
 import handleValidationErrors from "./utils/handleValidationErrors.js";
 mongoose
-  .connect(process.env.MONGODB_URL)
+  .connect(
+    "mongodb+srv://dimapen2002:12Dimabob122@cluster0.rnqnljn.mongodb.net/MERN-Blog"
+  )
   // mongodb+srv://dimapen2002:12Dimabob122@cluster0.rnqnljn.mongodb.net/MERN-Blog
   .then(() => {
     console.log("DB OK");
