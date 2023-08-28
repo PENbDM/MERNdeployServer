@@ -1,4 +1,6 @@
 import express from "express";
+import "dotenv/config";
+
 import multer from "multer";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -20,7 +22,7 @@ import {
 import * as PostController from "./controllers/PostController.js";
 import handleValidationErrors from "./utils/handleValidationErrors.js";
 mongoose
-  .connect(process.env.MONGODB_URI)
+  .connect(process.env.MONGODB_URL)
   // mongodb+srv://dimapen2002:12Dimabob122@cluster0.rnqnljn.mongodb.net/MERN-Blog
   .then(() => {
     console.log("DB OK");
