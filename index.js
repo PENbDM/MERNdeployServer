@@ -20,9 +20,8 @@ import {
 import * as PostController from "./controllers/PostController.js";
 import handleValidationErrors from "./utils/handleValidationErrors.js";
 mongoose
-  .connect(
-    "mongodb+srv://dimapen2002:12Dimabob122@cluster0.rnqnljn.mongodb.net/MERN-Blog"
-  )
+  .connect(process.env.MONGODB_URI)
+  // mongodb+srv://dimapen2002:12Dimabob122@cluster0.rnqnljn.mongodb.net/MERN-Blog
   .then(() => {
     console.log("DB OK");
   })
@@ -83,7 +82,8 @@ app.patch(
   PostController.update
 );
 // winish at 1:50
-app.listen(4444, (err) => {
+//PORT --4444
+app.listen(process.env.PORT || 4444, (err) => {
   if (err) {
     return console.log(err);
   }
